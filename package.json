@@ -1,0 +1,27 @@
+{
+  "name": "agent-bridge",
+  "version": "1.0.0",
+  "description": "Phone to desktop agent terminal bridge over Cloudflare Tunnel",
+  "main": "server.mjs",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "start": "node server.mjs",
+    "test": "node --test",
+    "tunnel": "node scripts/tunnel.mjs"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "dependencies": {
+    "@xterm/addon-fit": "^0.11.0",
+    "@xterm/xterm": "^6.0.0",
+    "node-pty": "^1.1.0",
+    "ws": "^8.22.0"
+  }
+}
