@@ -1,6 +1,6 @@
 {
   "name": "agent-bridge",
-  "version": "1.0.0",
+  "version": "0.2.0",
   "description": "Phone to desktop agent terminal bridge over Cloudflare Tunnel",
   "main": "server.mjs",
   "directories": {

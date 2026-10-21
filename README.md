@@ -2,7 +2,38 @@
 
 通过手机浏览器控制电脑上的 Codex、Claude Code 和系统终端。电脑保留真实 PTY 进程，手机通过 Cloudflare Tunnel + WebSocket 收发终端数据，无需家庭公网 IP。
 
-这是可运行的源码 MVP，不是已打包的 EXE。支持 Windows 10 1809+ / Windows 11（ConPTY）、macOS、Linux；当前自动化实测环境是 Linux，Windows 和真实 Agent 登录、权限确认界面需要在目标电脑验证。
+
+## 界面预览
+
+以下为实际运行截图，展示系统终端会话。
+
+**桌面端 · 浅色主题**
+
+![Agent Bridge 桌面浅色主题：会话侧栏、实时终端和指令输入区](assets/previews/desktop-light.png)
+
+
+**桌面端 · 深色主题**
+
+![Agent Bridge 桌面深色主题](assets/previews/desktop-dark.png)
+
+**手机端 · 390px 窄屏布局**
+
+<img src="assets/previews/mobile-light.png" alt="Agent Bridge 手机端：实时终端、快捷按键和底部输入框" width="320">
+
+
+
+## 本版界面更新（0.2.0）
+
+- 登录页改为简洁中性布局，工作区使用会话侧栏、真实终端和底部输入框。
+- 支持浅色、深色、跟随系统；主题只存储在当前浏览器，访问密钥不写入浏览器存储。
+- 桌面侧栏可折叠，窄屏使用可关闭的会话抽屉；快捷键条可横向滑动。
+- 点击“新建会话”选择 Agent；空白工作区也可直接点选 Codex、Claude Code 或系统终端。
+- 每个会话分别保留当前页面里的未发送草稿；刷新页面后草稿不保留。
+- 输入框支持 Ctrl/Cmd+Enter 发送，普通 Enter 换行，输入法组合期间不触发快捷发送。
+- 关闭会话前显示确认框；Ctrl+C 仍是独立的终端快捷键。
+- 连接服务、访问密钥、Cloudflare Tunnel 和原生 Agent 的启动方式延续上一版。后端只新增主题脚本的静态文件路由。
+
+解压后进入 `agent-bridge` 目录，仍按下面的命令启动。若旧版正在运行，换新版前先正常结束 Agent 会话并停止旧服务；内存会话不会迁移。
 
 ## 能做什么
 

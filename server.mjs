@@ -35,6 +35,7 @@ export function createBridge({ token, cwd = process.cwd(), maxSessions = 6 } = {
   const assets = new Map([
     ['/', ['public/index.html', 'text/html; charset=utf-8']],
     ['/app.js', ['public/app.js', 'text/javascript; charset=utf-8']],
+    ['/theme.js', ['public/theme.js', 'text/javascript; charset=utf-8']],
     ['/style.css', ['public/style.css', 'text/css']],
     ['/vendor/xterm.js', ['node_modules/@xterm/xterm/lib/xterm.js', 'text/javascript']],
     ['/vendor/xterm.css', ['node_modules/@xterm/xterm/css/xterm.css', 'text/css']],
