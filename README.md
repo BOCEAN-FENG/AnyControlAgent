@@ -45,6 +45,26 @@
 - 密钥登录、HttpOnly Cookie、同源校验；服务仅监听 127.0.0.1。
 - 所有前端依赖本地提供，不依赖手机访问第三方 CDN。
 
+## Windows 桌面启动器与 EXE 打包
+
+新增中文桌面启动器：自动启动本机服务并打开浏览器，显示随机访问密钥和手机 HTTPS 地址，支持选择工作目录、停止服务和重新连接隧道。关闭窗口会提示并结束终端任务。工作目录保存在当前用户的 `LocalAppData\AnyControlAgent`；密钥每次启动重新生成，不保存到配置文件。
+
+在 Windows x64 上安装 Node.js 22/24 LTS 和 `cloudflared`，确保二者在 PATH 中，然后在项目目录执行：
+
+```powershell
+npm.cmd ci
+powershell -ExecutionPolicy Bypass -File desktop\build.ps1
+powershell -ExecutionPolicy Bypass -File desktop\package.ps1
+```
+
+`build.ps1` 生成 `dist\AnyControlAgent-Windows\AnyControlAgent.exe`，同时复制运行时、前端及生产依赖，运行时需保留整个文件夹。`package.ps1` 进一步生成便携 ZIP，并在桌面生成内含全部依赖的单文件 `AnyControlAgent.exe`。单文件首次运行会自动解包到 `LocalAppData\AnyControlAgent\app-<内容哈希>`。构建和运行依赖 Windows 的 .NET Framework 4.5 或更高版本。
+
+启动后点击“复制密钥”，粘贴到网页登录框；手机使用窗口显示的 HTTPS 地址和同一密钥。其他电脑使用 Codex / Claude Code 时仍需自行安装对应 CLI 并登录。临时地址可能随重启变化，网络必须能访问 Cloudflare。
+
+启动器使用系统分配的空闲本机端口，隔离 Cloudflare 配置，不改写已有配置。隧道进程单独直连，使用 IPv4 和 HTTP/2 传输，并通过 `GODEBUG=http2client=0` 兼容临时地址申请；Agent 进程保留原网络环境。要求代理才能访问 Cloudflare 的网络需要相应调整启动器参数。
+
+打包后运行 `npm.cmd test` 会额外验证内置 Node 的服务启动、登录、真实 PTY 创建和标准输入关闭流程；没有 Windows 构建产物时，该附加测试自动跳过。Windows 下原版 `node-pty` 的清理辅助进程可能打印 `AttachConsole failed`，已观察到测试仍通过且服务正常退出。
+
 ## Windows 快速开始
 
 ### 1. 安装环境
@@ -165,7 +185,7 @@ npm.cmd start
 - 多设备可同时输入，最后调整窗口的设备决定终端尺寸；目前没有单写入者抢占锁。
 - 断线后禁用发送，不自动重发输入，以免重复执行；发送后如果立即断线，需要自己查看终端确认 Agent 是否收到。
 - Cloudflare 的可达性取决于电脑和手机所在网络，程序不保证每个网络都能连接。
-- 暂不提供文件上传、后台推送、原生手机 App、桌面托盘或 EXE 安装包。
+- 暂不提供文件上传、后台推送、原生手机 App、桌面托盘或安装向导；可使用上面的 Windows 便携 EXE。
 
 ## 常见问题
 

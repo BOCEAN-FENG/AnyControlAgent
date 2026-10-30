@@ -1,0 +1,28 @@
+AnyControlAgent Windows 便携版
+
+1. 双击 AnyControlAgent.exe，自动启动本机服务并打开浏览器。
+2. 在程序窗口点击“复制密钥”，粘贴到本机网页登录框。
+3. 手机使用窗口中的 HTTPS 地址，输入相同密钥登录。
+4. 选择 Codex、Claude Code 或系统终端，即可开始操作。
+
+工作目录默认是桌面。要切换目录，先停止服务，再选择目录并启动。
+工作目录会保存在当前用户 LocalAppData\AnyControlAgent 中。
+密钥每次启动重新生成，不写入配置文件。请仅交给你信任的人。
+临时手机地址每次启动可能变化；Cloudflare 隧道需要电脑网络可达。
+如果手机隧道失败，本机页面仍可使用，可以检查网络后点击“重连手机隧道”。
+隧道进程使用直连；Agent 的代理环境保持原样。
+隧道已配置 IPv4、HTTP/2 传输，并关闭 Go HTTP 客户端的 HTTP/2。
+关闭程序或停止服务将结束当前终端任务。手机断开本身不会结束任务。
+
+本包内含 Node.js 和 cloudflared，无需单独安装它们。
+必须保留 EXE 同目录的 runtime、desktop、public、node_modules 等文件。
+移动到其他电脑时请复制整个文件夹或解压完整 ZIP。
+桌面另有内含全部依赖的单文件 AnyControlAgent.exe，可单独复制，首次运行自动解包到 LocalAppData。
+其他电脑使用 Codex / Claude Code 时，仍需安装对应 CLI 并自行完成账号登录。
+账号登录状态以各自 CLI 为准。
+
+源码：https://github.com/BOCEAN-FENG/AnyControlAgent
+桌面封装构建脚本位于源码目录 desktop。
+构建：在项目目录执行 powershell -ExecutionPolicy Bypass -File desktop\build.ps1
+生成单文件 EXE：在项目目录执行 powershell -ExecutionPolicy Bypass -File desktop\package.ps1
+桌面封装使用系统 .NET Framework 4.x；目标为 Windows x64。
